@@ -34,6 +34,7 @@ module.exports = {
         spaceId: 'oj8angf1z5k4',
         accessToken: 'bd411ddc6a01a7ec657ea9c197f13d90719c31a0800aee1fb8f33b63ed68c48d'
       }
-    }
+    },
+    'gatsby-transformer-remark'
   ],
 }

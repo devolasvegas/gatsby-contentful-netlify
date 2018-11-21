@@ -5,11 +5,12 @@ import Layout from '../components/layout'
 
 class BlogPost extends Component {
   render() {
-    const { title } = this.props.data.contentfulBlog
+    const { title, content } = this.props.data.contentfulBlog
     return (
         <Layout>
             <div>
                 <h1>{title}</h1>
+                <div dangerouslySetInnerHTML={{__html: content.childMarkdownRemark.html }} />
             </div>
         </Layout>
     )
@@ -27,6 +28,11 @@ export const pageQuery = graphql`
         contentfulBlog(slug: {eq: $slug}) {
             title
             slug
+            content {
+                childMarkdownRemark {
+                    html
+                }
+            }
         }
     }
 `

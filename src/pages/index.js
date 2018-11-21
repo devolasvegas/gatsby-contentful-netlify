@@ -1,5 +1,5 @@
 import React from 'react'
-import { Link } from 'gatsby'
+import { Link, graphql } from 'gatsby'
 
 import Layout from '../components/layout'
 import Image from '../components/image'
@@ -8,6 +8,8 @@ const BlogPost = ({ node }) => {
   return (
     <li key={node.id}>
       <Link to={node.slug}>{node.title}</Link>
+      {/* <img src={node.featuredImage.fluid.src} alt={node.featuredImage.description} /> */}
+      <div>{node.content.childMarkdownRemark.excerpt}</div>
     </li>
   )
 }
@@ -35,12 +37,27 @@ export const PageQuery = graphql`
       query pageQuery {
         allContentfulBlog(filter: {
           node_locale: {eq: "en-US"}
+        },
+        sort: {
+          fields: [date],
+          order: DESC
         }) {
             edges {
               node {
                 id
                 title
                 slug
+                content {
+                  childMarkdownRemark {
+                    excerpt
+                  }
+                }
+                featuredImage {
+                  fluid(maxWidth: 300) {
+                    src
+                  }
+                  description
+                }
               }
             }
         }

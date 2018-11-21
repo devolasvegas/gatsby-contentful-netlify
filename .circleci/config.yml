@@ -1,0 +1,36 @@
+version: 2
+jobs:
+  build: 
+    branches:
+      only: master
+    docker:
+      -image: circleci/node:7.10
+    steps:
+      - checkout
+      - restore_cache:
+        key: dependency-cache-{{ checksum "package.json"}}
+        key: v1-dependencies-
+
+      - run:
+          name: Install dependencies
+          command: npm install
+
+      - save_cache:
+        paths:
+          - node_modules
+        key: v1-dependencies-{{ checksum "package.json" }}
+
+      - run:
+          name: test
+          command: echo "no test"
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: Install awscli
+          command: |
+            sudo apt-get install python-pip python-dev
+            sudo pip install awscli
+      - run:
+          name: Deploy to s3
+          command: aws s3 sync public s3://preview

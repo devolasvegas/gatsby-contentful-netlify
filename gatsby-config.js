@@ -1,3 +1,11 @@
+const dotenv = require('dotenv');
+
+if(process.env.ENVIRONMENT !== "production") {
+  dotenv.config()
+}
+
+const { spaceId, accessToken } = process.env
+
 module.exports = {
   siteMetadata: {
     title: 'Gatsby Default Starter',
@@ -31,8 +39,8 @@ module.exports = {
     {
       resolve: `gatsby-source-contentful`,
       options: {
-        spaceId: 'oj8angf1z5k4',
-        accessToken: 'bd411ddc6a01a7ec657ea9c197f13d90719c31a0800aee1fb8f33b63ed68c48d'
+        spaceId,
+        accessToken
       }
     },
     'gatsby-transformer-remark'
